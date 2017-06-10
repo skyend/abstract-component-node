@@ -6,6 +6,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename : 'bundle.js',
+        libraryTarget:'umd',
     },
 
     module: {
@@ -27,12 +28,4 @@ module.exports = {
         ]
     },
 
-    resolve: {
-        modules: [
-            "node_modules",
-            path.resolve(__dirname, "src")
-        ],
-
-        extensions: [".js"],
-    },
 }
