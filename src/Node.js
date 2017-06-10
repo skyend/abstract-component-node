@@ -30,6 +30,7 @@ export default class DirectiveNode {
   type;
   constructor({
     tag,
+    children,
 
     classes,
     style,
@@ -85,6 +86,7 @@ export default class DirectiveNode {
 
   static importFromJSON({
       tag,
+      children,
 
       classes,
       style,
