@@ -1,0 +1,37 @@
+{
+  "name": "abstract-component-node",
+  "version": "0.5.0",
+  "description": "Abstract vue node component lib. compatibility vue first.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "babel ./index.js --presets babel-preset-es2015  --out-dir dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skyend/abstract-component-node.git"
+  },
+  "keywords": [
+    "virtual",
+    "component",
+    "node",
+    "vue",
+    "vue-first-compatibilty"
+  ],
+  "author": "Jinwoong Han (theskyend0@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skyend/abstract-component-node/issues"
+  },
+  "homepage": "https://github.com/skyend/abstract-component-node#readme",
+
+  "dependencies": {
+    "babel-core": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-es2017": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "lodash": "4.17.4"
+  }
+}
