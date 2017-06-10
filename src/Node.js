@@ -8,7 +8,7 @@ export default class DirectiveNode {
 
 
   // data
-  class;
+  classes; // same to class
   style;
   attrs;
   props;
@@ -22,7 +22,6 @@ export default class DirectiveNode {
   key;
   ref;
 
-
   // Helper
   parent;
 
@@ -30,6 +29,8 @@ export default class DirectiveNode {
   pos;
   type;
   constructor({
+    tag,
+
     classes,
     style,
     attrs,
@@ -45,9 +46,22 @@ export default class DirectiveNode {
     ref,
   }, pos, parent){
     this.tag = tag;
-    this.props = props;
-    this.children = children;
+
+    this.classes = classes;
     this.style = style;
+    this.attrs = attrs;
+    this.props = props;
+    this.domProps = domProps;
+    this.on = on;
+    this.nativeOn = nativeOn;
+    this.directives = directives;
+    this.scopedSlots = scopedSlots;
+    this.slot = slot;
+
+    this.key = key;
+    this.ref = ref;
+
+    this.children = children;
 
     this.parent = parent;
     this.pos = pos;
@@ -69,9 +83,41 @@ export default class DirectiveNode {
     }
   }
 
-  static importFromJSON({tag, props, children, style }, pos = '0', parent = null ){
+  static importFromJSON({
+      tag,
 
-    let node = new DirectiveNode({tag, props, style }, pos, parent);
+      classes,
+      style,
+      attrs,
+      props,
+      domProps,
+      on,
+      nativeOn,
+      directives,
+      scopedSlots,
+      slot,
+
+      key,
+      ref,
+  }, pos = '0', parent = null ){
+
+    let node = new DirectiveNode({
+      tag : tag,
+
+      classes : cloneDeep(classes),
+      style : cloneDeep(style),
+      attrs : cloneDeep(attrs),
+      props : cloneDeep(props),
+      domProps : cloneDeep(domProps),
+      on : cloneDeep(on),
+      nativeOn : cloneDeep(nativeOn),
+      directives : cloneDeep(directives),
+      scopedSlots : cloneDeep(scopedSlots),
+      slot : cloneDeep(slot),
+
+      key : cloneDeep(key),
+      ref : cloneDeep(ref),
+    }, pos, parent);
 
     if( children ){
       node.children = children.map((json, i)=> DirectiveNode.importFromJSON(json, [pos,i].join('.'), node));
@@ -83,8 +129,20 @@ export default class DirectiveNode {
   exportToJSON(){
     let json = {
       tag : this.tag,
-      props : cloneDeep(this.props),
+
+      classes : cloneDeep(this.classes),
       style : cloneDeep(this.style),
+      attrs : cloneDeep(this.attrs),
+      props : cloneDeep(this.props),
+      domProps : cloneDeep(this.domProps),
+      on : cloneDeep(this.on),
+      nativeOn : cloneDeep(this.nativeOn),
+      directives : cloneDeep(this.directives),
+      scopedSlots : cloneDeep(this.scopedSlots),
+      slot : cloneDeep(this.slot),
+
+      key : cloneDeep(this.key),
+      ref : cloneDeep(this.ref),
     };
 
     if( this.children ){
