@@ -84,6 +84,19 @@ export default class DirectiveNode {
     }
   }
 
+  getLinealDescentList(){
+    let des = [];
+
+    let node = this;
+
+    while(node){
+      des.unshift(node);
+      node = node.parent;
+    }
+
+    return des;
+  }
+
   static importFromJSON({
       tag,
       children,

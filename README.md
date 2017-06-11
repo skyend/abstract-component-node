@@ -17,6 +17,153 @@ import ComponentNode from 'abstract-component-node';
 ComponentNode.importFromJSON(JSON, IndexBaseLocation = '0', ParentNode = null)
 ```
 
+# API 
+
+## Node
+static importFromJSON(JSON Object, NodeLocationString, ParentNode)
+
+static exportToJSON()
+
+public getLinealDescentList()
+
+
+# JSON 
+
+```json
+
+{
+  "tag" : "_system-grid_",
+  "classes" : {
+    "test":true
+  },
+  "props" : {
+
+  },
+  "children" : [
+    {
+      "tag" : "_system-row_",
+      "props" : {
+
+      },
+      "children" : [
+        {
+          "tag" : "_system-column_",
+          "props": {
+            "xs" : 6,
+            "sm" : 4
+          },
+          "classes" : {
+
+          },
+          "children" : [
+
+          ]
+        },
+
+        {
+          "tag" : "_system-column_",
+          "props": {
+            "xs" : 6,
+            "sm" : 8
+          },
+          "children" : [
+
+          ]
+        },
+
+        {
+          "tag" : "_system-layer_",
+          "props" : {
+
+          },
+          "children" : [
+
+          ]
+        }
+      ]
+    },
+    {
+      "tag" : "_system-row_",
+      "props" : {
+
+      },
+      "children" : [
+        {
+          "tag" : "_system-column_",
+          "props": {
+            "xs" : 12,
+            "sm" : 6
+          },
+          "classes" : {
+
+          },
+          "children" : [
+
+          ]
+        },
+
+        {
+          "tag" : "_system-column_",
+          "props": {
+            "xs" : 12,
+            "sm" : 6
+          },
+          "children" : [
+
+          ]
+        }
+      ]
+    },
+
+    {
+      "tag" : "_system-row_",
+      "props" : {
+
+      },
+      "children" : [
+
+      ]
+    },
+
+    {
+      "tag" : "_system-layer_",
+      "props" : {
+
+      },
+      "children" : [
+
+      ]
+    }
+  ]
+}
+
+```
+
+
+## JSON Properties 
+
+    tag : String
+    children : [JSONObject...]
+
+    classes : { className... : true }
+    style : { styleName : ... }
+    attrs,
+    props,
+    domProps,
+    on,
+    nativeOn,
+    directives,
+    scopedSlots,
+    slot,
+
+    key,
+    ref,
+
+#Author
+
+Jinwoong Han ( theskyend0@gmail.com )
+
+
 # License
 [MIT](LICENSE)
 
