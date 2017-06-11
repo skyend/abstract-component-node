@@ -26,6 +26,8 @@ static exportToJSON()
 
 public getLinealDescentList()
 
+public findByLocation(Location)
+
 
 # JSON 
 
