@@ -14,7 +14,7 @@ npm install abstract-component-node
 ```javascript
 import ComponentNode from 'abstract-component-node';
 
-ComponentNode.importFromJSON(JSON, IndexBaseLocation = '0', ParentNode = null)
+let node = ComponentNode.importFromJSON(JSON, IndexBaseLocation = '0', ParentNode = null)
 ```
 
 # API 
