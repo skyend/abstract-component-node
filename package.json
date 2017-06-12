@@ -1,6 +1,6 @@
 {
   "name": "abstract-component-node",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Abstract vue node component lib. compatibility vue first.",
   "main": "dist/bundle.js",
   "scripts": {
