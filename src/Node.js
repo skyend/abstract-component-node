@@ -204,7 +204,7 @@ export default class DirectiveNode {
             delete attrs.class;
         }
 
-        if( dom.hasAttribute('style') ){
+        if( dom.hasAttribute && dom.hasAttribute('style') ){
             let styles = dom.getAttribute('style').split(';');
 
             let styleString;
