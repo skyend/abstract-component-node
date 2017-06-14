@@ -8,11 +8,11 @@ export default class DirectiveNode {
 
 
     // data
-    classes; // same to class
-    style;
-    attrs;
-    props;
-    domProps;
+    classes = {}; // same to class
+    style = {};
+    attrs = {};
+    props = {};
+    domProps = {};
     on;
     nativeOn;
     directives;
@@ -22,12 +22,16 @@ export default class DirectiveNode {
     key;
     ref;
 
+    nodeValue;
+
     // Helper
     parent;
 
     //
     pos;
     type;
+
+
 
     constructor({
         tag,
@@ -46,6 +50,7 @@ export default class DirectiveNode {
 
         key,
         ref,
+        nodeValue,
     }, pos, parent) {
         this.tag = tag;
 
@@ -59,6 +64,7 @@ export default class DirectiveNode {
         this.directives = directives;
         this.scopedSlots = scopedSlots;
         this.slot = slot;
+        this.nodeValue = nodeValue;
 
         this.key = key;
         this.ref = ref;
@@ -137,6 +143,7 @@ export default class DirectiveNode {
         directives,
         scopedSlots,
         slot,
+        nodeValue,
 
         key,
         ref,
@@ -155,6 +162,7 @@ export default class DirectiveNode {
             directives: cloneDeep(directives),
             scopedSlots: cloneDeep(scopedSlots),
             slot: cloneDeep(slot),
+            nodeValue : nodeValue,
 
             key: cloneDeep(key),
             ref: cloneDeep(ref),
@@ -162,6 +170,82 @@ export default class DirectiveNode {
 
         if (children) {
             node.children = children.map((json, i) => DirectiveNode.importFromJSON(json, [pos, i].join('.'), node));
+        }
+
+        return node;
+    }
+
+    static importFromHTMLElementNode(dom, pos = '0', parent = null){
+        let style = {};
+        let attrs = {};
+        let classes = {};
+        let domProps = {};
+
+        if( dom.attributes ){
+            let domAttributes = dom.attributes;
+            let attr;
+            for( let i = 0; i < domAttributes.length; i++ ){
+                attr = domAttributes[i];
+
+                attrs[attr.nodeName] = attr.nodeValue;
+            }
+        }
+
+        if( dom.classList ){
+            let classList = dom.classList;
+            let cls;
+            for( let i = 0; i < classList.length; i++ ){
+                cls = classList[i];
+
+                classes[cls] = true;
+            }
+
+            // exclude from attrs
+            delete attrs.class;
+        }
+
+        if( dom.hasAttribute('style') ){
+            let styles = dom.getAttribute('style').split(';');
+
+            let styleString;
+            for(let i = 0; i < styles.length; i++ ){
+                styleString = styles[i].trim();
+                let styleTokens = styleString.split(':');
+                let styleName = styleTokens[0].trim();
+                let styleValue = styleTokens[1].trim();
+                styleName = styleName.replace(/-([a-z])/g, (_,n)=> n.toUpperCase());
+
+                style[styleName] = styleValue;
+            }
+
+            // exclude from attrs
+            delete attrs.style;
+        }
+
+
+        let node = new DirectiveNode({
+            tag: dom.nodeName.toLowerCase(),
+
+            classes: classes,
+            style: style,
+            attrs: attrs,
+            props: {},
+            domProps: domProps,
+            on: undefined,
+            nativeOn: undefined,
+            directives: undefined,
+            scopedSlots: undefined,
+            slot: undefined,
+            nodeValue : dom.nodeValue,
+
+            key: undefined,
+            ref: undefined,
+        }, pos, parent);
+
+        if (dom.childNodes) {
+            node.children = Array.prototype.map.call(dom.childNodes,
+                (json, i) => DirectiveNode.importFromHTMLElementNode(json, [pos, i].join('.'), node)
+            );
         }
 
         return node;
@@ -181,6 +265,7 @@ export default class DirectiveNode {
             directives: cloneDeep(this.directives),
             scopedSlots: cloneDeep(this.scopedSlots),
             slot: cloneDeep(this.slot),
+            nodeValue : this.nodeValue,
 
             key: cloneDeep(this.key),
             ref: cloneDeep(this.ref),

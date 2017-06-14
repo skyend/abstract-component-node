@@ -20,14 +20,18 @@ let node = ComponentNode.importFromJSON(JSON, IndexBaseLocation = '0', ParentNod
 # API 
 
 ## Node
-static importFromJSON(JSON Object, NodeLocationString, ParentNode)
 
-static exportToJSON()
+```
+static importFromJSON(JSON Object, NodeLocationString, ParentNode) : Node
 
-public getLinealDescentList()
+static importFromHTMLElementNode(HTMLElement, pos = '0', parent = null) : Node
 
-public findByLocation(Location)
+static exportToJSON() : JSONObject
 
+public getLinealDescentList() : Array
+
+public findByLocation(Location) : Node
+```
 
 # JSON 
 
@@ -157,6 +161,7 @@ public findByLocation(Location)
     directives,
     scopedSlots,
     slot,
+    nodeValue,
 
     key,
     ref,
