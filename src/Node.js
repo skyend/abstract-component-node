@@ -212,10 +212,10 @@ export default class DirectiveNode {
                 styleString = styles[i].trim();
                 let styleTokens = styleString.split(':');
                 let styleName = styleTokens[0].trim();
-                let styleValue = styleTokens[1].trim();
+                let styleValue = styleTokens[1] && styleTokens[1].trim();
                 styleName = styleName.replace(/-([a-z])/g, (_,n)=> n.toUpperCase());
 
-                style[styleName] = styleValue;
+                style[styleName] = styleValue || '';
             }
 
             // exclude from attrs
