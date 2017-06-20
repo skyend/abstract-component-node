@@ -31,6 +31,17 @@ static exportToJSON() : JSONObject
 public getLinealDescentList() : Array
 
 public findByLocation(Location) : Node
+
+public appendChild(Node || JSON)
+
+public updateLocationFromMe()
+
+get location : location string
+
+public appendChildBefore(Int childIndex, Node || JSON)
+ 
+public appendChildAfter(Int childIndex, Node || JSON) 
+
 ```
 
 # JSON 

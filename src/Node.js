@@ -91,6 +91,97 @@ export default class DirectiveNode {
         }
     }
 
+    get location(){
+        return this.pos;
+    }
+
+    updateLocationFromMe(){
+        if( this.children ){
+            for( let i = 0; i < this.children.length; i++ ){
+                this.children[i]._updateLoc(this.pos + '.' + i);
+            }
+        }
+    }
+
+    _updateLoc(pos){
+        this.pos = pos;
+
+        if( this.children ){
+            for( let i = 0; i < this.children.length; i++ ){
+                this.children[i]._updateLoc(this.pos + '.' + i);
+            }
+        }
+    }
+
+    appendChild(nodeInstanceOrJSON){
+        if( typeof nodeInstanceOrJSON === 'object' ){
+            let nextChildIndex = this.children.length;
+            let newChild;
+            if( nodeInstanceOrJSON instanceof DirectiveNode ){
+                nodeInstanceOrJSON.updateLoc(this.pos + '.' + nextChildIndex);
+                nodeInstanceOrJSON.parent = this;
+
+                newChild = nodeInstanceOrJSON;
+            } else {
+                newChild = new DirectiveNode(nodeInstanceOrJSON, this.pos + '.' + nextChildIndex, this);
+            }
+
+            this.children.push(newChild);
+        } else {
+            throw new Error("error : First argument must be Node or JSON.");
+        }
+    }
+
+    appendChildAfter(childIdx, nodeInstanceOrJSON){
+        if( typeof nodeInstanceOrJSON === 'object' ){
+            let nextChildIndex = this.children.length;
+            let newChild;
+            if( nodeInstanceOrJSON instanceof DirectiveNode ){
+                nodeInstanceOrJSON.updateLoc(this.pos + '.' + nextChildIndex);
+                nodeInstanceOrJSON.parent = this;
+
+                newChild = nodeInstanceOrJSON;
+            } else {
+                newChild = new DirectiveNode(nodeInstanceOrJSON, this.pos + '.' + nextChildIndex, this);
+            }
+
+            this.children = [
+                ...this.children.slice(0,childIdx+1),
+                newChild,
+                ...this.children.slice(childIdx+1),
+            ];
+
+            this.updateLocationFromMe();
+        } else {
+            throw new Error("error : Second argument must be Node or JSON.");
+        }
+    }
+
+    appendChildBefore(childIdx, nodeInstanceOrJSON){
+        if( typeof nodeInstanceOrJSON === 'object' ){
+            let nextChildIndex = this.children.length;
+            let newChild;
+            if( nodeInstanceOrJSON instanceof DirectiveNode ){
+                nodeInstanceOrJSON.updateLoc(this.pos + '.' + nextChildIndex);
+                nodeInstanceOrJSON.parent = this;
+
+                newChild = nodeInstanceOrJSON;
+            } else {
+                newChild = new DirectiveNode(nodeInstanceOrJSON, this.pos + '.' + nextChildIndex, this);
+            }
+
+            this.children = [
+                ...this.children.slice(0,childIdx),
+                newChild,
+                ...this.children.slice(childIdx),
+            ];
+
+            this.updateLocationFromMe();
+        } else {
+            throw new Error("error : Second argument must be Node or JSON.");
+        }
+    }
+
     getLinealDescentList() {
         let des = [];
 
@@ -131,7 +222,7 @@ export default class DirectiveNode {
 
     static importFromJSON({
         tag,
-        children,
+        children = [],
 
         classes,
         style,
