@@ -34,6 +34,8 @@ public findByLocation(Location) : Node
 
 public appendChild(Node || JSON)
 
+public prependChild(Node || JSON)
+
 public updateLocationFromMe()
 
 get location : location string

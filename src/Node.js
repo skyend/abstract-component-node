@@ -113,12 +113,31 @@ export default class DirectiveNode {
         }
     }
 
+    prependChild(nodeInstanceOrJSON){
+        if( typeof nodeInstanceOrJSON === 'object' ){
+            let nextChildIndex = this.children.length;
+            let newChild;
+            if( nodeInstanceOrJSON instanceof DirectiveNode ){
+                nodeInstanceOrJSON._updateLoc(this.pos + '.' + nextChildIndex);
+                nodeInstanceOrJSON.parent = this;
+
+                newChild = nodeInstanceOrJSON;
+            } else {
+                newChild = new DirectiveNode(nodeInstanceOrJSON, this.pos + '.' + nextChildIndex, this);
+            }
+
+            this.children.unshift(newChild);
+        } else {
+            throw new Error("error : First argument must be Node or JSON.");
+        }
+    }
+
     appendChild(nodeInstanceOrJSON){
         if( typeof nodeInstanceOrJSON === 'object' ){
             let nextChildIndex = this.children.length;
             let newChild;
             if( nodeInstanceOrJSON instanceof DirectiveNode ){
-                nodeInstanceOrJSON.updateLoc(this.pos + '.' + nextChildIndex);
+                nodeInstanceOrJSON._updateLoc(this.pos + '.' + nextChildIndex);
                 nodeInstanceOrJSON.parent = this;
 
                 newChild = nodeInstanceOrJSON;
@@ -137,7 +156,7 @@ export default class DirectiveNode {
             let nextChildIndex = this.children.length;
             let newChild;
             if( nodeInstanceOrJSON instanceof DirectiveNode ){
-                nodeInstanceOrJSON.updateLoc(this.pos + '.' + nextChildIndex);
+                nodeInstanceOrJSON._updateLoc(this.pos + '.' + nextChildIndex);
                 nodeInstanceOrJSON.parent = this;
 
                 newChild = nodeInstanceOrJSON;
@@ -145,11 +164,16 @@ export default class DirectiveNode {
                 newChild = new DirectiveNode(nodeInstanceOrJSON, this.pos + '.' + nextChildIndex, this);
             }
 
-            this.children = [
-                ...this.children.slice(0,childIdx+1),
-                newChild,
-                ...this.children.slice(childIdx+1),
-            ];
+            if( typeof childIdx === 'number' ){
+                this.children = [
+                    ...this.children.slice(0,childIdx+1),
+                    newChild,
+                    ...this.children.slice(childIdx+1),
+                ];
+            } else {
+                this.children.push(newChild);
+            }
+
 
             this.updateLocationFromMe();
         } else {
@@ -162,19 +186,22 @@ export default class DirectiveNode {
             let nextChildIndex = this.children.length;
             let newChild;
             if( nodeInstanceOrJSON instanceof DirectiveNode ){
-                nodeInstanceOrJSON.updateLoc(this.pos + '.' + nextChildIndex);
+                nodeInstanceOrJSON._updateLoc(this.pos + '.' + nextChildIndex);
                 nodeInstanceOrJSON.parent = this;
 
                 newChild = nodeInstanceOrJSON;
             } else {
                 newChild = new DirectiveNode(nodeInstanceOrJSON, this.pos + '.' + nextChildIndex, this);
             }
-
-            this.children = [
-                ...this.children.slice(0,childIdx),
-                newChild,
-                ...this.children.slice(childIdx),
-            ];
+            if( typeof childIdx === 'number' ) {
+                this.children = [
+                    ...this.children.slice(0, childIdx),
+                    newChild,
+                    ...this.children.slice(childIdx),
+                ];
+            } else {
+                this.children.unshift(newChild);
+            }
 
             this.updateLocationFromMe();
         } else {
