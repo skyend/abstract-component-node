@@ -164,7 +164,7 @@ export default class DirectiveNode {
                 newChild = new DirectiveNode(nodeInstanceOrJSON, this.pos + '.' + nextChildIndex, this);
             }
 
-            if( typeof childIdx === 'number' ){
+            if( childIdx >= 0  ){
                 this.children = [
                     ...this.children.slice(0,childIdx+1),
                     newChild,
@@ -193,7 +193,8 @@ export default class DirectiveNode {
             } else {
                 newChild = new DirectiveNode(nodeInstanceOrJSON, this.pos + '.' + nextChildIndex, this);
             }
-            if( typeof childIdx === 'number' ) {
+
+            if( childIdx >= 0  ) {
                 this.children = [
                     ...this.children.slice(0, childIdx),
                     newChild,
@@ -207,6 +208,14 @@ export default class DirectiveNode {
         } else {
             throw new Error("error : Second argument must be Node or JSON.");
         }
+    }
+
+    removeChild(location){
+        let prevLength= this.children.length;
+        this.children = this.children.filter((childNode)=> childNode.pos !== location);
+        this.updateLocationFromMe();
+
+        return prevLength !== this.children.length;
     }
 
     getLinealDescentList() {

@@ -44,6 +44,8 @@ public appendChildBefore(Int childIndex, Node || JSON)
  
 public appendChildAfter(Int childIndex, Node || JSON) 
 
+public removeChild(String location) : bool
+
 ```
 
 # JSON 
