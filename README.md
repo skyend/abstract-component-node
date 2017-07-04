@@ -6,7 +6,6 @@
 
 
 ```bash
-npm install -g webpack 
 npm install abstract-component-node
 ```
 

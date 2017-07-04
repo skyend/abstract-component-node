@@ -1,11 +1,11 @@
 {
   "name": "abstract-component-node",
-  "version": "0.6.10",
+  "version": "0.6.11",
   "description": "Abstract vue node component lib. compatibility vue first.",
   "main": "dist/bundle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "webpack"
+    "postinstall": "./node_modules/webpack/bin/webpack.js || ../webpack/bin/webpack.js || webpack"
   },
   "repository": {
     "type": "git",
