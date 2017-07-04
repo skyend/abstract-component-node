@@ -6,6 +6,7 @@
 
 
 ```bash
+npm install -g webapck 
 npm install abstract-component-node
 ```
 
@@ -14,7 +15,7 @@ npm install abstract-component-node
 ```javascript
 import ComponentNode from 'abstract-component-node';
 
-let node = ComponentNode.importFromJSON(JSON, IndexBaseLocation = '0', ParentNode = null)
+let node = ComponentNode.importFromJSON(JSON, NodeLocationString = '0', ParentNode = null)
 ```
 
 # API 
@@ -22,9 +23,9 @@ let node = ComponentNode.importFromJSON(JSON, IndexBaseLocation = '0', ParentNod
 ## Node
 
 ```
-static importFromJSON(JSON Object, NodeLocationString, ParentNode) : Node
+static importFromJSON(JSONObject, NodeLocationString = '0', ParentNode = null) : Node
 
-static importFromHTMLElementNode(HTMLElement, pos = '0', parent = null) : Node
+static importFromHTMLElementNode(HTMLElement, NodeLocationString = '0', ParentNode = null) : Node
 
 static exportToJSON() : JSONObject
 
