@@ -53,8 +53,12 @@ export default class MetaNode {
     }
 
     find(func){
-        if( typeof func === 'function' ){
+        if( typeof func !== 'function' ){
             throw new Error('first arguments must be function');
+        }
+
+        if( !Array.isArray(this.__children) ){
+            return null;
         }
 
         for(let i = 0; i < this.__children.length; i++ ){
@@ -62,18 +66,30 @@ export default class MetaNode {
                 return this.__children[i];
             }
         }
+
+        return null;
     }
 
     findRecursive(func){
-        if( typeof func === 'function' ){
+        if( typeof func !== 'function' ){
             throw new Error('first arguments must be function');
         }
 
+        let recursiveResult;
         for(let i = 0; i < this.__children.length; i++ ){
+
             if( func(this.__children[i]) ){
                 return this.__children[i];
             }
+
+            recursiveResult = this.__children[i].findRecursive(func);
+
+            if( recursiveResult ){
+                return recursiveResult;
+            }
         }
+
+        return null;
     }
 
     updateLocationFromMe(){
@@ -235,6 +251,14 @@ export default class MetaNode {
         }
 
         return node;
+    }
+
+    setData(key, data){
+        if( this.__initialKeys.findIndex(key) == -1 ){
+            this.__initialKeys.push(key);
+        }
+
+        this[key] = data;
     }
 
     static importFromJSON(JSONReference, __location = '0', _parent = null) {

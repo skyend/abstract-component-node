@@ -9,21 +9,64 @@
 npm install abstract-component-node
 ```
 
+# Provides Classes
+
+## ComponentNode <default>
+
+ComponentNode follows Vue's element creation field structure
+
+## MetaNode
+
+The MetaNode does not follow any structure.
+
+The structure of the data structure and its fields is your freedom
+
+However, you should be aware that the children field is created as a child of Node.
+
+And of the JSON fields
+
+```
+__children
+__initialKeys
+__location
+__parent
+
+_children
+_initialKeys
+_location
+_parent
+```
+
+These eight are reserved, so avoid using them as JSON fields.
+
+## Directive 
+
+I think this may be useless to you.
+
+
 # Examples
 
 ```javascript
+// ComponentNode
 import ComponentNode from 'abstract-component-node';
 
 let node = ComponentNode.importFromJSON(JSON, NodeLocationString = '0', ParentNode = null)
 ```
 
+```javascript
+// MetaNode
+import {MetaNode} from 'abstract-component-node';
+
+let node = MetaNode.importFromJSON(JSON, NodeLocationString = '0', ParentNode = null)
+```
+
 # API 
 
-## Node
+## ComponentNode
 
 ```
 static importFromJSON(JSONObject, NodeLocationString = '0', ParentNode = null) : Node
-
+ 
 static importFromHTMLElementNode(HTMLElement, NodeLocationString = '0', ParentNode = null) : Node
 
 static exportToJSON() : JSONObject
@@ -32,13 +75,15 @@ public getLinealDescentList() : Array
 
 public findByLocation(Location) : Node
 
+publid find(function) : Node 
+
+public findRecurisve(function) : Node
+
 public appendChild(Node || JSON)
 
 public prependChild(Node || JSON)
 
 public updateLocationFromMe()
-
-get location : location string
 
 public appendChildBefore(Int childIndex, Node || JSON)
  
@@ -46,9 +91,81 @@ public appendChildAfter(Int childIndex, Node || JSON)
 
 public removeChild(String location) : bool
 
+get location : location string
+
+get parent : parentNode
+
+get children : Node Array
+
 ```
 
-# JSON 
+> Info : importFromJSON (deep copy)
+> Info : exportToJSON (deep copy)
+
+## MetaNode
+
+```
+static importFromJSON(JSONObject, NodeLocationString = '0', ParentNode = null) : Node
+ 
+static exportToJSON() : JSONObject
+
+public getLinealDescentList() : Array
+
+public findByLocation(Location) : Node
+
+publid find(function) : Node 
+
+public findRecurisve(function) : Node
+
+public appendChild(Node || JSON)
+
+public prependChild(Node || JSON)
+
+public updateLocationFromMe()
+
+public setData(key, data)
+
+public appendChildBefore(Int childIndex, Node || JSON)
+ 
+public appendChildAfter(Int childIndex, Node || JSON) 
+
+public removeChild(String location) : bool
+
+get _location : location string
+
+get _parent : location string
+
+get _children : Node Array
+
+```
+
+> Info : importFromJSON (deep copy)
+> Info : exportToJSON (deep copy)
+
+
+## ComponentNode JSON Properties 
+
+    tag : String
+    children : [JSONObject...]
+
+    classes : { className... : true }
+    style : { styleName : ... }
+    attrs,
+    props,
+    domProps,
+    on,
+    nativeOn,
+    directives,
+    scopedSlots,
+    slot,
+    nodeValue,
+
+    key,
+    ref,
+    
+    
+
+## ComponentNode JSON Sample
 
 ```json
 
@@ -147,7 +264,7 @@ public removeChild(String location) : bool
     },
 
     {
-      "tag" : "_system-layer_",
+      "tag" : "div",
       "props" : {
 
       },
@@ -159,27 +276,6 @@ public removeChild(String location) : bool
 }
 
 ```
-
-
-## JSON Properties 
-
-    tag : String
-    children : [JSONObject...]
-
-    classes : { className... : true }
-    style : { styleName : ... }
-    attrs,
-    props,
-    domProps,
-    on,
-    nativeOn,
-    directives,
-    scopedSlots,
-    slot,
-    nodeValue,
-
-    key,
-    ref,
 
 # Author
 

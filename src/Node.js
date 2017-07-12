@@ -231,6 +231,50 @@ export default class DirectiveNode {
         return des;
     }
 
+    find(func){
+        if( typeof func !== 'function' ){
+            throw new Error('first arguments must be function');
+        }
+
+        if( !Array.isArray(this.children) ){
+            return null;
+        }
+
+        for(let i = 0; i < this.children.length; i++ ){
+            if( func(this.children[i]) ){
+                return this.children[i];
+            }
+        }
+
+        return null;
+    }
+
+    findRecursive(func){
+        if( typeof func !== 'function' ){
+            throw new Error('first arguments must be function');
+        }
+
+        if( !Array.isArray(this.children) ){
+            return null;
+        }
+
+        let recursiveResult;
+        for(let i = 0; i < this.children.length; i++ ){
+
+            if( func(this.children[i]) ){
+                return this.children[i];
+            }
+
+            recursiveResult = this.children[i].findRecursive(func);
+
+            if( recursiveResult ){
+                return recursiveResult;
+            }
+        }
+
+        return null;
+    }
+
 
     findByLocation(_loc) {
         if( _loc.indexOf(this.pos) !== 0 ){

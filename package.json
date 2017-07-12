@@ -1,6 +1,6 @@
 {
   "name": "abstract-component-node",
-  "version": "0.6.13",
+  "version": "0.6.14",
   "description": "Abstract vue node component lib. compatibility vue first.",
   "main": "dist/bundle.js",
   "scripts": {
@@ -16,7 +16,8 @@
     "component",
     "node",
     "vue",
-    "vue-first-compatibilty"
+    "vue-first-compatibilty",
+    "metanode"
   ],
   "author": "Jinwoong Han (theskyend0@gmail.com)",
   "license": "MIT",

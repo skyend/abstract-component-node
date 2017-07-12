@@ -2,7 +2,7 @@ export default from './Node';
 export Directive from './Directive';
 export MetaNode from './MetaNode';
 // import MetaNode from './MetaNode';
-//
+
 // let root = MetaNode.importFromJSON({
 //     "children" : [
 //         {
@@ -52,4 +52,4 @@ export MetaNode from './MetaNode';
 //     ]
 // });
 //
-// console.log(root);
+// console.log(root.findRecursive((node)=>node.key === 'view').exportToJSON());
