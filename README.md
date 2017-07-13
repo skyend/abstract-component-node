@@ -21,23 +21,21 @@ The MetaNode does not follow any structure.
 
 The structure of the data structure and its fields is your freedom
 
-However, you should be aware that the children field is created as a child of Node.
+However, you should be aware that the children field is re created as a child of Node.
 
 And of the JSON fields
 
-```
-__children
+``` 
 __initialKeys
 __location
 __parent
-
-_children
+ 
 _initialKeys
 _location
 _parent
 ```
 
-These eight are reserved, so avoid using them as JSON fields.
+These six are reserved, so avoid using them as JSON fields.
 
 ## Directive 
 

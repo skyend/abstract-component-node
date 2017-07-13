@@ -2,7 +2,7 @@ import cloneDeep from 'lodash/cloneDeep';
 
 export default class MetaNode {
 
-    __children;
+    children;
     __initialKeys;
 
     __location;
@@ -36,13 +36,6 @@ export default class MetaNode {
         return this.__parent;
     }
 
-    set _children(_children){
-        this._children = _children;
-    }
-
-    get _children(){
-        return this.__children;
-    }
 
     set _initialKeys(__initialKeys){
         this.__initialKeys = __initialKeys;
@@ -65,13 +58,13 @@ export default class MetaNode {
             throw new Error('first arguments must be function');
         }
 
-        if( !Array.isArray(this.__children) ){
+        if( !Array.isArray(this.children) ){
             return null;
         }
 
-        for(let i = 0; i < this.__children.length; i++ ){
-            if( func(this.__children[i]) === true ){
-                return this.__children[i];
+        for(let i = 0; i < this.children.length; i++ ){
+            if( func(this.children[i]) === true ){
+                return this.children[i];
             }
         }
 
@@ -87,14 +80,14 @@ export default class MetaNode {
             return true;
         }
 
-        if( !Array.isArray(this.__children) ){
+        if( !Array.isArray(this.children) ){
             return false;
         }
 
         let recursiveResult;
-        for(let i = 0; i < this.__children.length; i++ ){
+        for(let i = 0; i < this.children.length; i++ ){
 
-            recursiveResult = this.__children[i].visitRecursive(func);
+            recursiveResult = this.children[i].visitRecursive(func);
 
             if( recursiveResult === true ){
                 return true;
@@ -105,9 +98,9 @@ export default class MetaNode {
     }
 
     updateLocationFromMe(){
-        if( this.__children ){
-            for( let i = 0; i < this.__children.length; i++ ){
-                this.__children[i]._updateLoc(this.__location + '.' + i);
+        if( this.children ){
+            for( let i = 0; i < this.children.length; i++ ){
+                this.children[i]._updateLoc(this.__location + '.' + i);
             }
         }
     }
@@ -115,16 +108,16 @@ export default class MetaNode {
     _updateLoc(__location){
         this.__location = __location;
 
-        if( this.__children ){
-            for( let i = 0; i < this.__children.length; i++ ){
-                this.__children[i]._updateLoc(this.__location + '.' + i);
+        if( this.children ){
+            for( let i = 0; i < this.children.length; i++ ){
+                this.children[i]._updateLoc(this.__location + '.' + i);
             }
         }
     }
 
     prependChild(nodeInstanceOrJSON){
         if( typeof nodeInstanceOrJSON === 'object' ){
-            let nextChildIndex = this.__children.length;
+            let nextChildIndex = this.children.length;
             let newChild;
             if( nodeInstanceOrJSON instanceof MetaNode ){
                 nodeInstanceOrJSON._updateLoc(this.__location + '.' + nextChildIndex);
@@ -135,7 +128,7 @@ export default class MetaNode {
                 newChild = new MetaNode(nodeInstanceOrJSON, this.__location + '.' + nextChildIndex, this);
             }
 
-            this.__children.unshift(newChild);
+            this.children.unshift(newChild);
         } else {
             throw new Error("error : First argument must be Node or JSON.");
         }
@@ -143,7 +136,7 @@ export default class MetaNode {
 
     appendChild(nodeInstanceOrJSON){
         if( typeof nodeInstanceOrJSON === 'object' ){
-            let nextChildIndex = this.__children.length;
+            let nextChildIndex = this.children.length;
             let newChild;
             if( nodeInstanceOrJSON instanceof MetaNode ){
                 nodeInstanceOrJSON._updateLoc(this.__location + '.' + nextChildIndex);
@@ -154,7 +147,7 @@ export default class MetaNode {
                 newChild = new MetaNode(nodeInstanceOrJSON, this.__location + '.' + nextChildIndex, this);
             }
 
-            this.__children.push(newChild);
+            this.children.push(newChild);
         } else {
             throw new Error("error : First argument must be Node or JSON.");
         }
@@ -162,7 +155,7 @@ export default class MetaNode {
 
     appendChildAfter(childIdx, nodeInstanceOrJSON){
         if( typeof nodeInstanceOrJSON === 'object' ){
-            let nextChildIndex = this.__children.length;
+            let nextChildIndex = this.children.length;
             let newChild;
             if( nodeInstanceOrJSON instanceof MetaNode ){
                 nodeInstanceOrJSON._updateLoc(this.__location + '.' + nextChildIndex);
@@ -174,13 +167,13 @@ export default class MetaNode {
             }
 
             if( childIdx >= 0  ){
-                this.__children = [
-                    ...this.__children.slice(0,childIdx+1),
+                this.children = [
+                    ...this.children.slice(0,childIdx+1),
                     newChild,
-                    ...this.__children.slice(childIdx+1),
+                    ...this.children.slice(childIdx+1),
                 ];
             } else {
-                this.__children.push(newChild);
+                this.children.push(newChild);
             }
 
 
@@ -192,7 +185,7 @@ export default class MetaNode {
 
     appendChildBefore(childIdx, nodeInstanceOrJSON){
         if( typeof nodeInstanceOrJSON === 'object' ){
-            let nextChildIndex = this.__children.length;
+            let nextChildIndex = this.children.length;
             let newChild;
             if( nodeInstanceOrJSON instanceof MetaNode ){
                 nodeInstanceOrJSON._updateLoc(this.__location + '.' + nextChildIndex);
@@ -204,13 +197,13 @@ export default class MetaNode {
             }
 
             if( childIdx >= 0  ) {
-                this.__children = [
-                    ...this.__children.slice(0, childIdx),
+                this.children = [
+                    ...this.children.slice(0, childIdx),
                     newChild,
-                    ...this.__children.slice(childIdx),
+                    ...this.children.slice(childIdx),
                 ];
             } else {
-                this.__children.unshift(newChild);
+                this.children.unshift(newChild);
             }
 
             this.updateLocationFromMe();
@@ -220,11 +213,11 @@ export default class MetaNode {
     }
 
     removeChild(location){
-        let prevLength= this.__children.length;
-        this.__children = this.__children.filter((childNode)=> childNode.__location !== location);
+        let prevLength= this.children.length;
+        this.children = this.children.filter((childNode)=> childNode.__location !== location);
         this.updateLocationFromMe();
 
-        return prevLength !== this.__children.length;
+        return prevLength !== this.children.length;
     }
 
     getLinealDescentList() {
@@ -255,9 +248,9 @@ export default class MetaNode {
         let node = this;
 
         for (let i = 1; i < __locationTokens.length; i++) {
-            if (!node.__children) return null;
+            if (!node.children) return null;
 
-            node = node.__children[parseInt(__locationTokens[i])];
+            node = node.children[parseInt(__locationTokens[i])];
 
             if (!node) return null;
         }
@@ -278,7 +271,7 @@ export default class MetaNode {
         let node = new MetaNode(cloneDeep(JSONReference), __location, _parent);
 
         if (node.children) {
-            node.__children = node.children.map((json, i) => MetaNode.importFromJSON(json, [__location, i].join('.'), node));
+            node.children = node.children.map((json, i) => MetaNode.importFromJSON(json, [__location, i].join('.'), node));
         }
 
         return node;
@@ -295,8 +288,8 @@ export default class MetaNode {
             json[keys[i]] = cloneDeep(this[keys[i]]);
         }
 
-        if (this.__children) {
-            json.children = this.__children.map((childNode) => childNode.exportToJSON());
+        if (this.children) {
+            json.children = this.children.map((childNode) => childNode.exportToJSON());
         }
 
         return json;
