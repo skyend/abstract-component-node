@@ -63,85 +63,99 @@ let node = MetaNode.importFromJSON(JSON, NodeLocationString = '0', ParentNode = 
 # API 
 
 ## ComponentNode
-
-```
-static importFromJSON(JSONObject, NodeLocationString = '0', ParentNode = null) : Node
  
-static importFromHTMLElementNode(HTMLElement, NodeLocationString = '0', ParentNode = null) : Node
-
-static exportToJSON() : JSONObject
-
-public getLinealDescentList() : Array
-
-public findByLocation(Location) : Node
-
-publid find(function) : Node 
-
-public findRecurisve(function) : Node
-
-public appendChild(Node || JSON)
-
-public prependChild(Node || JSON)
-
-public updateLocationFromMe()
-
-public appendChildBefore(Int childIndex, Node || JSON)
+### static importFromJSON(JSONObject, NodeLocationString = '0', ParentNode = null) : Node
  
-public appendChildAfter(Int childIndex, Node || JSON) 
+ Deep copy 
+ 
+### static importFromHTMLElementNode(HTMLElement, NodeLocationString = '0', ParentNode = null) : Node
+ 
+### static exportToJSON() : JSONObject
 
-public removeChild(String location) : bool
+ Deep copied
 
-get location : location string
+### getLinealDescentList() : Array
 
-get parent : parentNode
+### findByLocation(Location) : Node
 
-get children : Node Array
+### visit(function) : Node 
 
-```
+Stop visiting and return that node if returned true.
+
+### visitRecursive(function) : Node
+
+Stop visiting and return that node if returned true.
+
+include self to visit target.
+
+### appendChild(Node || JSON)
+
+### prependChild(Node || JSON)
+
+### updateLocationFromMe()
+
+### appendChildBefore(Int childIndex, Node || JSON)
+ 
+### appendChildAfter(Int childIndex, Node || JSON) 
+
+### removeChild(String location) : bool
+
+### get location : location string
+
+### get parent : parentNode
+
+### get children : Node Array
+
+ 
 
 > Info : importFromJSON (deep copy)
 > Info : exportToJSON (deep copy)
 
 ## MetaNode
-
-```
-static importFromJSON(JSONObject, NodeLocationString = '0', ParentNode = null) : Node
  
-static exportToJSON() : JSONObject
-
-public getLinealDescentList() : Array
-
-public findByLocation(Location) : Node
-
-publid find(function) : Node 
-
-public findRecurisve(function) : Node
-
-public appendChild(Node || JSON)
-
-public prependChild(Node || JSON)
-
-public updateLocationFromMe()
-
-public setData(key, data)
-
-public appendChildBefore(Int childIndex, Node || JSON)
+### static importFromJSON(JSONObject, NodeLocationString = '0', ParentNode = null) : Node
  
-public appendChildAfter(Int childIndex, Node || JSON) 
+ Deep Copy 
+ 
+### static exportToJSON() : JSONObject
 
-public removeChild(String location) : bool
+Deep copied
 
-get _location : location string
+### getLinealDescentList() : Array
 
-get _parent : location string
+### findByLocation(Location) : Node
 
-get _children : Node Array
+### visit(function(Node)) : Node 
 
-```
+Stop visiting and return that node if returned true.
 
-> Info : importFromJSON (deep copy)
-> Info : exportToJSON (deep copy)
+### visitRecursive(function(Node)) : Node
 
+Stop visiting and return that node if returned true.
+
+include self to visit target.
+
+### appendChild(Node || JSON)
+
+### prependChild(Node || JSON)
+
+### updateLocationFromMe()
+
+### setData(key, data)
+
+### appendChildBefore(Int childIndex, Node || JSON)
+ 
+### appendChildAfter(Int childIndex, Node || JSON) 
+
+### removeChild(String location) : bool
+
+### get _location : location string
+
+### get _parent : location string
+
+### get _children : Node Array
+
+  
 
 ## ComponentNode JSON Properties 
 

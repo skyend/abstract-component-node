@@ -231,7 +231,7 @@ export default class DirectiveNode {
         return des;
     }
 
-    find(func){
+    visitChildren(func){
         if( typeof func !== 'function' ){
             throw new Error('first arguments must be function');
         }
@@ -249,9 +249,15 @@ export default class DirectiveNode {
         return null;
     }
 
-    findRecursive(func){
+    visitRecursive(func, depth =0){
         if( typeof func !== 'function' ){
             throw new Error('first arguments must be function');
+        }
+
+        if( depth === 0 ){
+            if( func(this) === true ){
+                return this;
+            }
         }
 
         if( !Array.isArray(this.children) ){
@@ -261,11 +267,11 @@ export default class DirectiveNode {
         let recursiveResult;
         for(let i = 0; i < this.children.length; i++ ){
 
-            if( func(this.children[i]) ){
+            if( func(this.children[i]) === true ){
                 return this.children[i];
             }
 
-            recursiveResult = this.children[i].findRecursive(func);
+            recursiveResult = this.children[i].findRecursive(func, depth + 1);
 
             if( recursiveResult ){
                 return recursiveResult;

@@ -52,7 +52,7 @@ export default class MetaNode {
         return this.__initialKeys;
     }
 
-    find(func){
+    visitChildren(func){
         if( typeof func !== 'function' ){
             throw new Error('first arguments must be function');
         }
@@ -62,7 +62,7 @@ export default class MetaNode {
         }
 
         for(let i = 0; i < this.__children.length; i++ ){
-            if( func(this.__children[i]) ){
+            if( func(this.__children[i]) === true ){
                 return this.__children[i];
             }
         }
@@ -70,19 +70,29 @@ export default class MetaNode {
         return null;
     }
 
-    findRecursive(func){
+    visitRecursive(func, depth = 0){
         if( typeof func !== 'function' ){
             throw new Error('first arguments must be function');
+        }
+
+        if( depth === 0 ){
+            if( func(this) === true ){
+                return this;
+            }
+        }
+
+        if( !Array.isArray(this.children) ){
+            return null;
         }
 
         let recursiveResult;
         for(let i = 0; i < this.__children.length; i++ ){
 
-            if( func(this.__children[i]) ){
+            if( func(this.__children[i]) === true ){
                 return this.__children[i];
             }
 
-            recursiveResult = this.__children[i].findRecursive(func);
+            recursiveResult = this.__children[i].findRecursive(func, depth +1);
 
             if( recursiveResult ){
                 return recursiveResult;
