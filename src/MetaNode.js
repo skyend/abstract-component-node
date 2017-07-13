@@ -70,36 +70,30 @@ export default class MetaNode {
         return null;
     }
 
-    visitRecursive(func, depth = 0){
+    visitRecursive(func){
         if( typeof func !== 'function' ){
-            throw new Error('first arguments must be function');
+            throw new Error('First arguments must be function.');
         }
 
-        if( depth === 0 ){
-            if( func(this) === true ){
-                return this;
-            }
+        if( func(this) === true ){
+            return true;
         }
 
-        if( !Array.isArray(this.children) ){
-            return null;
+        if( !Array.isArray(this.__children) ){
+            return false;
         }
 
         let recursiveResult;
         for(let i = 0; i < this.__children.length; i++ ){
 
-            if( func(this.__children[i]) === true ){
-                return this.__children[i];
-            }
+            recursiveResult = this.__children[i].visitRecursive(func);
 
-            recursiveResult = this.__children[i].visitRecursive(func, depth +1);
-
-            if( recursiveResult ){
-                return recursiveResult;
+            if( recursiveResult === true ){
+                return true;
             }
         }
 
-        return null;
+        return false;
     }
 
     updateLocationFromMe(){

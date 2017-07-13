@@ -249,36 +249,31 @@ export default class DirectiveNode {
         return null;
     }
 
-    visitRecursive(func, depth =0){
+    visitRecursive(func){
         if( typeof func !== 'function' ){
             throw new Error('first arguments must be function');
         }
 
-        if( depth === 0 ){
-            if( func(this) === true ){
-                return this;
-            }
+        if( func(this) === true ){
+            return true;
         }
 
+
         if( !Array.isArray(this.children) ){
-            return null;
+            return false;
         }
 
         let recursiveResult;
         for(let i = 0; i < this.children.length; i++ ){
 
-            if( func(this.children[i]) === true ){
-                return this.children[i];
-            }
+            recursiveResult = this.children[i].visitRecursive(func);
 
-            recursiveResult = this.children[i].visitRecursive(func, depth + 1);
-
-            if( recursiveResult ){
-                return recursiveResult;
+            if( recursiveResult === true ){
+                return true;
             }
         }
 
-        return null;
+        return false;
     }
 
 

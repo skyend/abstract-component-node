@@ -78,13 +78,13 @@ let node = MetaNode.importFromJSON(JSON, NodeLocationString = '0', ParentNode = 
 
 ### findByLocation(Location) : Node
 
-### visit(function) : Node 
+### visitChildren(function) : Node 
 
 Stop visiting and return that node if returned true.
 
-### visitRecursive(function) : Node
+### visitRecursive(function) : Boolean
 
-Stop visiting and return that node if returned true.
+Stop visiting if returned true.
 
 include self to visit target.
 
@@ -125,13 +125,13 @@ Deep copied
 
 ### findByLocation(Location) : Node
 
-### visit(function(Node)) : Node 
+### visitChildren(function(Node)) : Node 
 
 Stop visiting and return that node if returned true.
 
-### visitRecursive(function(Node)) : Node
+### visitRecursive(function(Node)) : Boolean
 
-Stop visiting and return that node if returned true.
+Stop visiting if returned true.
 
 include self to visit target.
 
