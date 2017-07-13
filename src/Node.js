@@ -271,7 +271,7 @@ export default class DirectiveNode {
                 return this.children[i];
             }
 
-            recursiveResult = this.children[i].findRecursive(func, depth + 1);
+            recursiveResult = this.children[i].visitRecursive(func, depth + 1);
 
             if( recursiveResult ){
                 return recursiveResult;

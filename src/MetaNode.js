@@ -92,7 +92,7 @@ export default class MetaNode {
                 return this.__children[i];
             }
 
-            recursiveResult = this.__children[i].findRecursive(func, depth +1);
+            recursiveResult = this.__children[i].visitRecursive(func, depth +1);
 
             if( recursiveResult ){
                 return recursiveResult;
