@@ -73,6 +73,10 @@ let node = MetaNode.importFromJSON(JSON, NodeLocationString = '0', ParentNode = 
 ### static exportToJSON() : JSONObject
 
  Deep copied
+ 
+### strideUpBloodLine(function(Node))
+ 
+ Run the function while climbing the genealogy.
 
 ### getLinealDescentList() : Array
 
@@ -134,6 +138,10 @@ Stop visiting and return that node if returned true.
 Stop visiting if returned true.
 
 include self to visit target.
+
+### strideUpBloodLine(function(Node))
+
+Run the function while climbing the genealogy.
 
 ### appendChild(Node || JSON)
 

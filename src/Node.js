@@ -95,6 +95,14 @@ export default class DirectiveNode {
         return this.pos;
     }
 
+    strideUpBloodLine(func){
+        let node = this;
+        while(node){
+            func(node);
+            node = node.parent;
+        }
+    }
+
     updateLocationFromMe(){
         if( this.children ){
             for( let i = 0; i < this.children.length; i++ ){

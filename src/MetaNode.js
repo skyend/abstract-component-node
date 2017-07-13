@@ -52,6 +52,14 @@ export default class MetaNode {
         return this.__initialKeys;
     }
 
+    strideUpBloodLine(func){
+        let node = this;
+        while(node){
+            func(node);
+            node = node.__parent;
+        }
+    }
+
     visitChildren(func){
         if( typeof func !== 'function' ){
             throw new Error('first arguments must be function');
