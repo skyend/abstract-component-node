@@ -113,7 +113,7 @@ include self to visit target.
 > Info : importFromJSON (deep copy)
 > Info : exportToJSON (deep copy)
 
-## MetaNode
+## MetaNode (Extendable)
  
 ### static importFromJSON(JSONObject, NodeLocationString = '0', ParentNode = null) : Node
  

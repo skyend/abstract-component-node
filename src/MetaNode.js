@@ -119,13 +119,13 @@ export default class MetaNode {
         if( typeof nodeInstanceOrJSON === 'object' ){
             let nextChildIndex = this.children.length;
             let newChild;
-            if( nodeInstanceOrJSON instanceof MetaNode ){
+            if( nodeInstanceOrJSON instanceof (this.getClass()) ){
                 nodeInstanceOrJSON._updateLoc(this.__location + '.' + nextChildIndex);
                 nodeInstanceOrJSON._parent = this;
 
                 newChild = nodeInstanceOrJSON;
             } else {
-                newChild = new MetaNode(nodeInstanceOrJSON, this.__location + '.' + nextChildIndex, this);
+                newChild = new (this.getClass())(nodeInstanceOrJSON, this.__location + '.' + nextChildIndex, this);
             }
 
             this.children.unshift(newChild);
@@ -138,13 +138,13 @@ export default class MetaNode {
         if( typeof nodeInstanceOrJSON === 'object' ){
             let nextChildIndex = this.children.length;
             let newChild;
-            if( nodeInstanceOrJSON instanceof MetaNode ){
+            if( nodeInstanceOrJSON instanceof (this.getClass()) ){
                 nodeInstanceOrJSON._updateLoc(this.__location + '.' + nextChildIndex);
                 nodeInstanceOrJSON._parent = this;
 
                 newChild = nodeInstanceOrJSON;
             } else {
-                newChild = new MetaNode(nodeInstanceOrJSON, this.__location + '.' + nextChildIndex, this);
+                newChild = new (this.getClass())(nodeInstanceOrJSON, this.__location + '.' + nextChildIndex, this);
             }
 
             this.children.push(newChild);
@@ -157,13 +157,13 @@ export default class MetaNode {
         if( typeof nodeInstanceOrJSON === 'object' ){
             let nextChildIndex = this.children.length;
             let newChild;
-            if( nodeInstanceOrJSON instanceof MetaNode ){
+            if( nodeInstanceOrJSON instanceof (this.getClass()) ){
                 nodeInstanceOrJSON._updateLoc(this.__location + '.' + nextChildIndex);
                 nodeInstanceOrJSON._parent = this;
 
                 newChild = nodeInstanceOrJSON;
             } else {
-                newChild = new MetaNode(nodeInstanceOrJSON, this.__location + '.' + nextChildIndex, this);
+                newChild = new (this.getClass())(nodeInstanceOrJSON, this.__location + '.' + nextChildIndex, this);
             }
 
             if( childIdx >= 0  ){
@@ -187,13 +187,13 @@ export default class MetaNode {
         if( typeof nodeInstanceOrJSON === 'object' ){
             let nextChildIndex = this.children.length;
             let newChild;
-            if( nodeInstanceOrJSON instanceof MetaNode ){
+            if( nodeInstanceOrJSON instanceof (this.getClass()) ){
                 nodeInstanceOrJSON._updateLoc(this.__location + '.' + nextChildIndex);
                 nodeInstanceOrJSON._parent = this;
 
                 newChild = nodeInstanceOrJSON;
             } else {
-                newChild = new MetaNode(nodeInstanceOrJSON, this.__location + '.' + nextChildIndex, this);
+                newChild = new (this.getClass())(nodeInstanceOrJSON, this.__location + '.' + nextChildIndex, this);
             }
 
             if( childIdx >= 0  ) {
@@ -266,12 +266,16 @@ export default class MetaNode {
         this[key] = data;
     }
 
+    getClass(){
+        return this.__proto__.constructor;
+    }
+
     static importFromJSON(JSONReference, __location = '0', _parent = null) {
 
-        let node = new MetaNode(cloneDeep(JSONReference), __location, _parent);
+        let node = new (this)(cloneDeep(JSONReference), __location, _parent);
 
         if (node.children) {
-            node.children = node.children.map((json, i) => MetaNode.importFromJSON(json, [__location, i].join('.'), node));
+            node.children = node.children.map((json, i) => (this).importFromJSON(json, [__location, i].join('.'), node));
         }
 
         return node;
