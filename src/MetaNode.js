@@ -259,7 +259,7 @@ export default class MetaNode {
     }
 
     setData(key, data){
-        if( this.__initialKeys.findIndex(key) == -1 ){
+        if( this.__initialKeys.indexOf(key) == -1 ){
             this.__initialKeys.push(key);
         }
 
