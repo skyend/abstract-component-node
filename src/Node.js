@@ -76,16 +76,16 @@ export default class DirectiveNode {
 
 
         switch (tag) {
-            case "_system-grid_":
+            case "core-system-grid":
                 this.type = 'grid';
                 break;
-            case "_system-row_":
+            case "core-system-row":
                 this.type = 'row';
                 break;
-            case "_system-column_":
+            case "core-system-column":
                 this.type = 'column';
                 break;
-            case "_system-layer_":
+            case "core-system-layer":
                 this.type = 'layer';
                 break;
         }
