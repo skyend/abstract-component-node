@@ -27,6 +27,17 @@ export default class DirectiveNode {
     // Helper
     parent;
 
+    // nuxt
+    asyncData;
+    fetch;
+    head;
+    layout;
+    middleware;
+    scrollToTop;
+    transition;
+    validate;
+
+
     //
     pos;
     type;
@@ -48,6 +59,16 @@ export default class DirectiveNode {
         scopedSlots,
         slot,
 
+        // nuxt
+        asyncData,
+        fetch,
+        head,
+        layout,
+        middleware,
+        scrollToTop,
+        transition,
+        validate,
+
         key,
         ref,
         nodeValue,
@@ -65,6 +86,17 @@ export default class DirectiveNode {
         this.scopedSlots = scopedSlots;
         this.slot = slot;
         this.nodeValue = nodeValue;
+
+        // nuxt
+        this.asyncData = asyncData;
+        this.fetch = fetch;
+        this.head = head;
+        this.layout = layout;
+        this.middleware = middleware;
+        this.scrollToTop = scrollToTop;
+        this.transition = transition;
+        this.validate = validate;
+
 
         this.key = key;
         this.ref = ref;
@@ -325,6 +357,17 @@ export default class DirectiveNode {
         slot,
         nodeValue,
 
+
+        // nuxt
+          asyncData,
+          fetch,
+          head,
+          layout,
+          middleware,
+          scrollToTop,
+          transition,
+          validate,
+
         key,
         ref,
     }, pos = '0', parent = null) {
@@ -343,6 +386,15 @@ export default class DirectiveNode {
             scopedSlots: cloneDeep(scopedSlots),
             slot: cloneDeep(slot),
             nodeValue : nodeValue,
+
+            asyncData : cloneDeep(asyncData),
+            fetch : cloneDeep(fetch),
+            head : cloneDeep(head),
+            layout : cloneDeep(layout),
+            middleware : cloneDeep(middleware),
+            scrollToTop : cloneDeep(scrollToTop),
+            transition : cloneDeep(transition),
+            validate : cloneDeep(validate),
 
             key: cloneDeep(key),
             ref: cloneDeep(ref),
@@ -446,6 +498,16 @@ export default class DirectiveNode {
             scopedSlots: cloneDeep(this.scopedSlots),
             slot: cloneDeep(this.slot),
             nodeValue : this.nodeValue,
+
+            // nuxt
+            asyncData : cloneDeep(this.asyncData),
+            fetch : cloneDeep(this.fetch),
+            head : cloneDeep(this.head),
+            layout : cloneDeep(this.layout),
+            middleware : cloneDeep(this.middleware),
+            scrollToTop : cloneDeep(this.scrollToTop),
+            transition : cloneDeep(this.transition),
+            validate : cloneDeep(this.validate),
 
             key: cloneDeep(this.key),
             ref: cloneDeep(this.ref),

@@ -1,6 +1,7 @@
 export default from './Node';
 export Directive from './Directive';
 export MetaNode from './MetaNode';
+export VueNuxtNode from './Node';
 
 // import MetaNode from './MetaNode';
 //
