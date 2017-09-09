@@ -116,6 +116,8 @@ export default class MetaNode {
     }
 
     prependChild(nodeInstanceOrJSON){
+        this.children = this.children || [];
+
         if( typeof nodeInstanceOrJSON === 'object' ){
             let nextChildIndex = this.children.length;
             let newChild;
@@ -135,6 +137,8 @@ export default class MetaNode {
     }
 
     appendChild(nodeInstanceOrJSON){
+        this.children = this.children || [];
+
         if( typeof nodeInstanceOrJSON === 'object' ){
             let nextChildIndex = this.children.length;
             let newChild;
@@ -154,6 +158,8 @@ export default class MetaNode {
     }
 
     appendChildAfter(childIdx, nodeInstanceOrJSON){
+        this.children = this.children || [];
+
         if( typeof nodeInstanceOrJSON === 'object' ){
             let nextChildIndex = this.children.length;
             let newChild;
@@ -184,6 +190,8 @@ export default class MetaNode {
     }
 
     appendChildBefore(childIdx, nodeInstanceOrJSON){
+        this.children = this.children || [];
+
         if( typeof nodeInstanceOrJSON === 'object' ){
             let nextChildIndex = this.children.length;
             let newChild;
