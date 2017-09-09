@@ -154,6 +154,9 @@ export default class DirectiveNode {
     }
 
     prependChild(nodeInstanceOrJSON){
+        this.children = this.children || [];
+
+
         if( typeof nodeInstanceOrJSON === 'object' ){
             let nextChildIndex = this.children.length;
             let newChild;
@@ -173,6 +176,8 @@ export default class DirectiveNode {
     }
 
     appendChild(nodeInstanceOrJSON){
+        this.children = this.children || [];
+
         if( typeof nodeInstanceOrJSON === 'object' ){
             let nextChildIndex = this.children.length;
             let newChild;
@@ -192,6 +197,8 @@ export default class DirectiveNode {
     }
 
     appendChildAfter(childIdx, nodeInstanceOrJSON){
+        this.children = this.children || [];
+
         if( typeof nodeInstanceOrJSON === 'object' ){
             let nextChildIndex = this.children.length;
             let newChild;
@@ -222,6 +229,8 @@ export default class DirectiveNode {
     }
 
     appendChildBefore(childIdx, nodeInstanceOrJSON){
+        this.children = this.children || [];
+
         if( typeof nodeInstanceOrJSON === 'object' ){
             let nextChildIndex = this.children.length;
             let newChild;
