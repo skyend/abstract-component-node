@@ -290,18 +290,31 @@ export default class MetaNode {
     }
 
 
-    exportToJSON() {
+    exportToJSON(opt) {
         let json = {};
-        let keys = this.__initialKeys;
+        let keys = this.__initialKeys, key;
         for( let i = 0; i < keys.length; i++ ){
             if( keys[i] === 'children' ){
                 continue;
             }
-            json[keys[i]] = cloneDeep(this[keys[i]]);
+            key = keys[i];
+
+            if( opt ){
+                if( opt.renames ){
+                    if( opt.renames[key] ){
+                        json[key] = cloneDeep(this[key]);
+                    } else {
+                        json[opt.renames[key]] = cloneDeep(this[key]);
+                    }
+                }
+            } else {
+                json[key] = cloneDeep(this[key]);
+            }
+
         }
 
         if (this.children) {
-            json.children = this.children.map((childNode) => childNode.exportToJSON());
+            json.children = this.children.map((childNode) => childNode.exportToJSON(opt));
         }
 
         return json;
