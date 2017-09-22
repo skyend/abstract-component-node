@@ -290,7 +290,7 @@ export default class MetaNode {
     }
 
 
-    exportToJSON(opt) {
+    exportToJSONExt({ checkChildrenEmpty, extendFields = {}, renames, deletes }){
         let json = {};
         let keys = this.__initialKeys, key;
         for( let i = 0; i < keys.length; i++ ){
@@ -299,22 +299,61 @@ export default class MetaNode {
             }
             key = keys[i];
 
-            if( opt ){
-                if( opt.renames ){
-                    if( opt.renames[key] ){
-                        json[opt.renames[key]] = cloneDeep(this[key]);
-                    } else {
-                        json[key] = cloneDeep(this[key]);
-                    }
-                }
-            } else {
-                json[key] = cloneDeep(this[key]);
-            }
+            json[key] = cloneDeep(this[key]);
+
 
         }
 
+
+        if( extendFields ){
+            let extendKeys = Object.keys(extendFields);
+
+            for(let i =0; i < extendKeys.length ; i++ ){
+                json[extendKeys[i]] = this[extendFields[extendKeys[i]]];
+            }
+        }
+
+        if( deletes ){
+            for(let i = 0; i < deletes.length; i++ ){
+                delete json[deletes[i]];
+            }
+        }
+
+        if( renames ){
+            let renameKeys = Object.key(renames )
+
+            for(let i = 0 ; i < renameKeys.length; i++ ){
+                json[renameKeys[i]] = json[renames[renameKeys[i]]];
+                delete json[renames[renameKeys[i]]];
+            }
+        }
+
         if (this.children) {
-            json.children = this.children.map((childNode) => childNode.exportToJSON(opt));
+            json.children = this.children.map((childNode) => childNode.exportToJSONExt(opt));
+
+            if( checkChildrenEmpty && json.children.length  <  1 ) {
+                delete json.children;
+            }
+        }
+
+
+        return json;
+    }
+
+    exportToJSON() {
+        let json = {};
+        let keys = this.__initialKeys, key;
+        for( let i = 0; i < keys.length; i++ ){
+            if( keys[i] === 'children' ){
+                continue;
+            }
+            key = keys[i];
+
+            json[key] = cloneDeep(this[key]);
+        }
+
+        if (this.children) {
+            json.children = this.children.map((childNode) => childNode.exportToJSON());
         }
 
         return json;
