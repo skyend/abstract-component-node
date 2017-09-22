@@ -329,7 +329,7 @@ export default class MetaNode {
         }
 
         if (this.children) {
-            json.children = this.children.map((childNode) => childNode.exportToJSONExt(opt));
+            json.children = this.children.map((childNode) => childNode.exportToJSONExt({ checkChildrenEmpty, extendFields, renames, deletes }));
 
             if( checkChildrenEmpty && json.children.length  <  1 ) {
                 delete json.children;
