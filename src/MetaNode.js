@@ -302,9 +302,9 @@ export default class MetaNode {
             if( opt ){
                 if( opt.renames ){
                     if( opt.renames[key] ){
-                        json[key] = cloneDeep(this[key]);
-                    } else {
                         json[opt.renames[key]] = cloneDeep(this[key]);
+                    } else {
+                        json[key] = cloneDeep(this[key]);
                     }
                 }
             } else {
